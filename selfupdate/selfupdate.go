@@ -121,6 +121,10 @@ func (u *Updater) BackgroundRun() error {
 }
 
 func (u *Updater) wantUpdate() bool {
+	if u.ForceCheck {
+		return true
+	}
+
 	path := u.getExecRelativeDir(u.Dir + upcktimePath)
 	if u.CurrentVersion == "dev" || (!u.ForceCheck && readTime(path).After(time.Now())) {
 		return false
